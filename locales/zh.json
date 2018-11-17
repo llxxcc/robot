@@ -1,0 +1,78 @@
+{
+  "header": {
+    "loginBtn": "登录"
+  },
+  "login": {
+    "title": "登录",
+    "placeholder": "请输入私钥...",
+    "cancel": "取消",
+    "login": "登录",
+    "errMsg": "私钥不能为空。",
+    "successMsg": "登录成功。",
+    "loginErrMsg": "登录失败, 请检查私钥是否正确。",
+    "authLogin": "请先登录"
+  },
+  "address": {
+    "gameContract": "游戏合约地址",
+    "edit": "修改",
+    "bind": "提交绑定",
+    "inviter": "邀请人",
+    "rollTimes": "投注次数",
+    "input1": "请输入合约地址...",
+    "input2": "请输入邀请人地址...",
+    "times": "投注次数",
+    "winRate": "投注胜率",
+    "authGameAddress": "游戏合约地址不能为空",
+    "authInviteAddress": "邀请人地址不能为空",
+    "suceess": "绑定成功"
+  },
+  "config": {
+    "diceBlance": "当前Dice数量",
+    "mining": "挖矿策略",
+    "speed": "刷单速度(请输入0-20整数)",
+    "speedUnit": "单/分钟",
+    "betSection": "投注区间(请输入2-96整数)",
+    "betNum": "每单投注数量（请输入1-1000整数）",
+    "run": "开始挖矿",
+    "stop": "停止挖矿",
+    "stopCondition1": "当TRX小于",
+    "stopCondition2": "当能量小于",
+    "stopCondition3": "当带宽小于",
+    "runErr": "请检查是否绑定合约，余额是否小于策略值"
+  },
+  "account": {
+    "h": "账户状态",
+    "trx": "当前TRX余额",
+    "energy": "当前剩余能量",
+    "bandwidth": "当前剩余带宽",
+    "overdue": "到期时间",
+    "freeze": "冻结",
+    "unFreeze": "解冻",
+    "freezeSuccess": "冻结成功",
+    "unfreezeSuccess": "解冻成功",
+    "freezeInputVal": "输入冻结或者解冻金额(TRX)..."
+  },
+  "table": {
+    "time": "时间",
+    "rollUnder": "小于该数获胜",
+    "bet": "投注",
+    "roll": "开奖号码",
+    "prize": "奖励"
+  },
+  "explain": {
+    "btn": "使用流程",
+    "title": "使用流程",
+    "p1": "1、点击登录按钮，输入TRON私钥离线登录。",
+    "p2": "2、输入游戏的智能合约地址，点击提交绑定按钮。",
+    "p3": "3、冻结一定数量的能量和带宽，用于挖矿机器人调用游戏的智能合约。",
+    "p4": "4、编辑挖矿策略",
+    "p5": "【1】刷单速度：每分钟可以投注多少次",
+    "p6": "【2】投注数字：小于该数获胜",
+    "p7": "【3】每单投注数量：每次投注的投注数量",
+    "p8": "【4】编辑池底限制：当TRX余额，剩余能量，剩余带宽，达到设定的临界值时，会自动停止挖矿，不再投注。",
+    "p9": "5、完成上述步骤后，点击开始挖矿，即可开始自动挖矿。",
+    "p10": "任何使用问题，欢迎咨询",
+    "p11": "电报群。",
+    "p12": "我们将会持续优化Dicerobot，欢迎给出反馈和建议。"
+  }
+}

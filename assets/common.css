@@ -1,0 +1,8 @@
+.el-dialog__header {
+  padding: 0px 0px 0px 20px;
+}
+
+.el-dialog__body {
+  padding: 0px 20px;
+  padding-bottom: 20px;
+}

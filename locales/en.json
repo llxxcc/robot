@@ -1,0 +1,13 @@
+{
+  "header": {
+    "loginBtn": "Login"
+  },
+  "login": {
+    "title": "Login",
+    "placeholder": "Please enter the private key...",
+    "cancel": "Cancel",
+    "login": "Login",
+    "errMsg": "Private key cannot be empty.",
+    "successMsg": "Login successful."
+  }
+}
