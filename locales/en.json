@@ -4,10 +4,77 @@
   },
   "login": {
     "title": "Login",
-    "placeholder": "Please enter the private key...",
+    "placeholder": "Please enter your private key...",
     "cancel": "Cancel",
     "login": "Login",
-    "errMsg": "Private key cannot be empty.",
-    "successMsg": "Login successful."
+    "errMsg": "Private key can not be empty.",
+    "successMsg": "Login successfully.",
+    "loginErrMsg": "Login failed. Please check whether private key is correct.",
+    "authLogin": "Please login at first"
+  },
+  "address": {
+    "gameContract": "Smart Contract Address",
+    "edit": "Edit",
+    "bind": "Submit",
+    "inviter": "Inviter",
+    "rollTimes": "Bet Times",
+    "input1": "Please enter the smart contract address...",
+    "input2": "Please enter the inviter address...",
+    "times": "Bet Times",
+    "winRate": "Win Rate",
+    "authGameAddress": "Smart contract address can not be empty.",
+    "authInviteAddress": "Inviter address can not be empty",
+    "suceess": "Bind successfully.",
+    "warn": "Some betting records might lag. But it won't affect real betting result or mining rewards."
+  },
+  "config": {
+    "diceBlance": "Current BET Amount",
+    "mining": "Mining Strategy",
+    "speed": "Mining Speed(Please enter 1-20 integers)",
+    "speedUnit": "Mining Times Per Minute",
+    "betSection": "Bet Number(Please enter 2-96 integers)",
+    "betNum": "Bet Amount of Every Mining（Please enter 10-10000 integers)",
+    "run": "Start Mining",
+    "stop": "Stop Mining",
+    "stopCondition1": "If TRX is less than",
+    "stopCondition2": "If Energy is less than",
+    "stopCondition3": "If Bandwidth is less than",
+    "runErr": "Please check whether the smart contract address has been submitted, or whether TRX balance, current energy, or current bandwidth is less than the limit."
+  },
+  "account": {
+    "h": "Account",
+    "trx": "Current TRX Amount",
+    "energy": "Current Energy",
+    "bandwidth": "Current Bandwidth",
+    "overdue": "Unfreezing Time",
+    "freeze": "Freeze",
+    "unFreeze": "Unfreeze",
+    "freezeSuccess": "Freeze successfully",
+    "unfreezeSuccess": "Unfreeze successfully",
+    "freezeInputVal": "Enter TRX Amount to freeze or unfreeze..."
+  },
+  "table": {
+    "time": "Time",
+    "rollUnder": "Roll Under to Win",
+    "bet": "Bet Amount",
+    "roll": "Lucky Number",
+    "prize": "Prize"
+  },
+  "explain": {
+    "btn": "FAQ",
+    "title": "FAQ",
+    "p1": "1、Click the button to login and enter your private key.",
+    "p2": "2、Enter the smart contract address of your game and then submit it.",
+    "p3": "3、Freezing a certain amount of energy and bandwidth for the robot triggering the smart contract.",
+    "p4": "4、Editing the mining strategy.",
+    "p5": "【1】Mining Speed: How many times you can mining per minute.",
+    "p6": "【2】Bet Number: You can win if the lucky number is less than it.",
+    "p7": "【3】Bet Amount of Every Mining.",
+    "p8": "【4】Editing the limit: If TRX balance, current energy, or current bandwidth is less than the limit, the robot will be stopped automitically.",
+    "p9": "【5】We suggest you enter a certain amount of energy or bandwidth as the limit of robot, otherwise you will burn your TRX to support the robot.",
+    "p10": "5、After completing the above steps, you can click the button to start mining.",
+    "p11": "If there is any question, please join our",
+    "p12": "Telegram Group.",
+    "p13": "Welcome for any feedback."
   }
 }

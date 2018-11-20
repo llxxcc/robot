@@ -27,6 +27,7 @@
             ? Number(0).toFixed(1) 
             : ((winTimes / (winTimes + loseTimes)) * 100).toFixed(1)}}%
         </p>
+        <span style="font-size: 12px; color: #666;">* {{$t('address.warn')}}</span>
       </div>
       <!-- 修改策略 -->
       <div class="config">
@@ -37,34 +38,46 @@
         <!-- 刷单速度 -->
         <div>
           {{$t('config.speed')}}：
-          <el-input class="speed-inp" v-model="myData.speed"></el-input>
+          <el-input
+            :class="auth.speed ? 'speed-inp error-inp' : 'speed-inp'"
+            type="number"
+            v-model="myData.speed">
+          </el-input>
           <span style="font-size: 12px;">{{$t('config.speedUnit')}}</span>
         </div>
         <!-- 投注区间 -->
         <div>
           {{$t('config.betSection')}}:
-          <el-input class="section-inp" v-model="myData.betSection"></el-input>
+          <el-input
+            :class="auth.betSection ? 'section-inp error-inp' : 'section-inp'"
+            type="number"
+            v-model="myData.betSection">
+          </el-input>
         </div>
         <!-- 每单投注数量 -->
         <div>
           {{$t('config.betNum')}}:
-          <el-input class="betnum-inp" v-model="myData.betNum"></el-input>
-          <span> * 10TRX</span>
+          <el-input
+            :class="auth.betNum ? 'betnum-inp error-inp' : 'betnum-inp'"
+            type="number"
+            v-model="myData.betNum">
+          </el-input>
+          <span>TRX</span>
         </div>
         <!-- 停止 -->
         <div>
           {{$t('config.stopCondition1')}}
-          <el-input class="stop-inp" v-model="myData.stopTrx"></el-input>
+          <el-input class="stop-inp" v-model="myData.stopTrx" type="number"></el-input>
           {{$t('config.stop')}}
         </div>
         <div>
           {{$t('config.stopCondition2')}}
-          <el-input class="stop-inp" v-model="myData.stopEnergy"></el-input>
+          <el-input class="stop-inp" v-model="myData.stopEnergy" type="number"></el-input>
           {{$t('config.stop')}}
         </div>
         <div>
           {{$t('config.stopCondition3')}}
-          <el-input class="stop-inp" v-model="myData.stopBandwidth"></el-input>
+          <el-input type="number" class="stop-inp" v-model="myData.stopBandwidth"></el-input>
           {{$t('config.stop')}}
         </div>
         <!-- 开始挖矿 -->
@@ -82,7 +95,7 @@
           <span>{{my.energy}}</span>
           <span>（{{$t('account.overdue')}}：{{my.energyTime}}）</span>
           <!-- <span> （{{$t('account.overdue')}}：{{my.energyTime}}）</span> -->
-          <el-input v-model="freezeEnergy" class="freeze-inp" :placeholder="$t('account.freezeInputVal')"></el-input>
+          <el-input type="number" v-model="freezeEnergy" class="freeze-inp" :placeholder="$t('account.freezeInputVal')"></el-input>
           <el-button @click="freeze('ENERGY')" type="primary">{{$t('account.freeze')}}</el-button>
           <el-button @click="freeze('ENERGY')">{{$t('account.unFreeze')}}</el-button>
         </div>
@@ -91,7 +104,7 @@
           <span>{{my.bandwidth}}</span>
           <span>（{{$t('account.overdue')}}：{{my.bandwidthTime}}）</span>
           <!-- <span> （{{$t('account.overdue')}}：{{my.bandwidthTime}}）</span> -->
-          <el-input v-model="freezeBandwidth" class="freeze-inp" :placeholder="$t('account.freezeInputVal')"></el-input>
+          <el-input type="number" v-model="freezeBandwidth" class="freeze-inp" :placeholder="$t('account.freezeInputVal')"></el-input>
           <el-button @click="freeze('BANDWIDTH')" type="primary">{{$t('account.freeze')}}</el-button>
           <el-button @click="freeze('BANDWIDTH')">{{$t('account.unFreeze')}}</el-button>
         </div>
@@ -177,6 +190,11 @@ export default {
       loseTimes: 0,
       allTimes: 1,
       explainDialog: false,
+      auth: {
+        speed: false,
+        betSection: false,
+        betNum: false
+      },
       my: {
         trx: 0,
         energy: 0,
@@ -215,10 +233,10 @@ export default {
   methods: {
     // 挖矿
     run() {
-      let flag = this.my.trx * 1 < this.myData.trx * 1 && this.my.stopBandwidth * 1 < this.myData.stopBandwidth * 1
+      let flag = this.my.trx * 1 < this.myData.stopTrx * 1 || this.my.bandwidth * 1 < this.myData.stopBandwidth * 1
       if (this.status === 'run') {
         this.startTime = new Date().getTime()
-        if (!flag && this.contractObj) {
+        if (!flag && this.contractObj && this.dataAuth()) {
           this.status = 'stop'
           this.timer = setInterval(() => {this.roll()}, 60000/(this.myData.speed * 1))
           this.eventTimer = setInterval(() => {this.eventServer()}, 6000)
@@ -239,18 +257,23 @@ export default {
       }
     },
     async roll() {
-      let flag = this.my.trx * 1 < this.myData.trx * 1 && this.my.stopBandwidth * 1 < this.myData.stopBandwidth * 1
+      let flag = this.my.trx * 1 < this.myData.stopTrx * 1 || this.my.bandwidth * 1 < this.myData.stopBandwidth * 1
       if (!flag) {
         this.contractObj.bet(this.myData.betSection * 1).send({
-          callValue: this.tronweb.toSun(this.myData.betNum * 10)
+          callValue: this.tronweb.toSun(this.myData.betNum * 1)
         }).then(async res => {
           this.getBalance()
           this.myData.rollTimes++
           let dice = await this.dicegameObj.getBalanceOf(this.account.address).call()
           this.myData.dice = dice.toString() / Math.pow(10, 6)
+          console.log(dice)
         }).catch(err => {
           console.log(err)
         })
+      } else {
+        this.status = 'run'
+        clearInterval(this.timer)
+        clearInterval(this.eventTimer)
       }
     },
     // 查询事件服务器
@@ -274,6 +297,7 @@ export default {
       }) || []
       loseRes = this.unique(loseRes.filter(v => 
         v.result._addr === this.account.address.replace(/^41/,'0x')))
+      console.log(loseRes)
       // 判断是否是第一次查询事件服务器
       if (this.eventTimes === 0) {
         this.loseList = loseRes
@@ -287,7 +311,7 @@ export default {
         this.loseList = this.unique(loseRes.concat(this.loseList))
         this.winList = this.unique(winRes.concat(this.winList))
         this.allList = this.unique([...winRes, ...loseRes, ...this.allList]).slice(0, 30).reverse()
-        window.localStorage.setItem('LIST', this.allList)
+        window.localStorage.setItem('LIST', JSON.stringify(this.allList))
       }
       this.eventTimes++
     },
@@ -431,13 +455,37 @@ export default {
       }
       return res
     },
+    // 数据验证
+    dataAuth() {
+      let data = this.myData
+      let res = true
+      if (data.speed < 1 || data.speed > 20) {
+        res = false
+        this.auth.speed = true
+      } else {
+        this.auth.speed = false
+      }
+      if (data.betSection < 2 || data.betSection > 96) {
+        res = false
+        this.auth.betSection = true
+      } else {
+        this.auth.betSection = false
+      }
+      if (data.betNum < 10 || data.betNum > 10000) {
+        res = false
+        this.auth.betNum = true
+      } else {
+        this.auth.betNum = false
+      }
+      return res
+    },
     // 数组去重
     unique(arr) {
       let res = []
       let obj = {}
       for (let i = 0, l = arr.length; i < l; i++) {
-        if (!obj[arr[i].block]) {
-          obj[arr[i].block] = '1'
+        if (!obj[arr[i].transaction]) {
+          obj[arr[i].transaction] = '1'
           res.push(arr[i])
         }
       }
@@ -503,13 +551,13 @@ export default {
     }
     .config {
       .speed-inp {
-        width: 50px;
+        width: 100px;
       }
       .section-inp {
-        width: 60px;
+        width: 100px;
       }
       .betnum-inp {
-        width: 70px;
+        width: 100px;
       }
       .stop-inp {
         width: 100px;
@@ -519,6 +567,10 @@ export default {
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+      }
+      .error-inp {
+        border: 1px solid red;
+        border-radius: 4px;
       }
     }
     .account {

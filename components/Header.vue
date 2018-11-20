@@ -43,10 +43,11 @@
       <p>{{$t('explain.p7')}}</p>
       <p>{{$t('explain.p8')}}</p>
       <p>{{$t('explain.p9')}}</p>
-      <p>
-        {{$t('explain.p10')}}
-        <span style="color: red;">{{$t('explain.p11')}}</span>
-        {{$t('explain.p12')}}
+      <p>{{$t('explain.p10')}}</p>
+      <p style="margin-top: 20px;">
+        {{$t('explain.p11')}}
+        <span style="color: red;">{{$t('explain.p12')}}</span>
+        {{$t('explain.p13')}}
       </p>
     </el-dialog>
   </div>

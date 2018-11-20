@@ -20,7 +20,7 @@ const HttpProvider = TronWeb.providers.HttpProvider
 const fullNode = new HttpProvider(netServer)
 const solidityNode = new HttpProvider(netServer)
 const eventServer = netServer
-const dicegame = 'TJXXTjz6bzhijYC55hrFvvuEeyaNDGrETg'
+const dicegame = 'THZP41aUockHon7n8vmSjcr55z1q9Ye7Gx'
 
 export default {
   props: {
