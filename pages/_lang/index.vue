@@ -217,6 +217,7 @@ export default {
     }
   },
   mounted() {
+    console.log(window)
     if (this.account.addressView) {
       this.getBalance()
     }

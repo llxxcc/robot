@@ -46,7 +46,11 @@
       <p>{{$t('explain.p10')}}</p>
       <p style="margin-top: 20px;">
         {{$t('explain.p11')}}
-        <span style="color: red;">{{$t('explain.p12')}}</span>
+        <a
+          href="https://t.me/joinchat/JUyvAxBWKORYfglGViY0eg"
+          target="_blank" style="color: red;">
+          {{$t('explain.p12')}}
+        </a>
         {{$t('explain.p13')}}
       </p>
     </el-dialog>
