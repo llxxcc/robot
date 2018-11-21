@@ -28,7 +28,7 @@
     "warn": "投注记录显示可能会有一定延迟，但不会影响真实投注结果和挖矿奖励。"
   },
   "config": {
-    "diceBlance": "当前BET数量",
+    "diceBlance": "当前dice数量",
     "mining": "挖矿策略",
     "speed": "刷单速度(请输入1-20整数)",
     "speedUnit": "单/分钟",

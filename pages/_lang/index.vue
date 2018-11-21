@@ -204,7 +204,7 @@ export default {
         bandwidthTime: ''
       },
       myData: {
-        gameAddress: 'TP82MkFYwLXzM5WowhJ4FfMHSP8RPzrhSC',
+        gameAddress: 'TMYcx6eoRXnePKT1jVn25ZNeMNJ6828HWk',
         inviterAddress: '',
         rollTimes: 0,
         dice: '',
@@ -266,8 +266,8 @@ export default {
         }).then(async res => {
           this.getBalance()
           this.myData.rollTimes++
-          let dice = await this.dicegameObj.balanceOf(this.account.address).call()
-          this.myData.dice = dice.balance.toString() / Math.pow(10, 6)
+          let dice = await this.dicegameObj.getBalanceOf(this.account.address).call()
+          this.myData.dice = dice.toString() / Math.pow(10, 6)
           console.log(dice)
         }).catch(err => {
           console.log(err)

@@ -14,13 +14,13 @@
 </template>
 
 <script>
-const netServer = 'https://api.trongrid.io'
+const netServer = 'https://api.shasta.trongrid.io'
 const TronWeb = require('TronWeb')
 const HttpProvider = TronWeb.providers.HttpProvider
 const fullNode = new HttpProvider(netServer)
 const solidityNode = new HttpProvider(netServer)
 const eventServer = netServer
-const dicegame = 'TQLNpTDwUQfnvTojatqRSqPpmW9WwWvkem'
+const dicegame = 'TMYcx6eoRXnePKT1jVn25ZNeMNJ6828HWk'
 
 export default {
   props: {
@@ -59,8 +59,8 @@ export default {
               this.dicegameObj = sRes
               this.$store.commit('SET_DICEGAME', this.dicegameObj)
               // 获取dice
-              this.dicegameObj.balanceOf(res.address.replace('/^41/','0x')).call().then(ssRes => {
-                this.$store.commit('SET_DICE', ssRes.balance.toString() / Math.pow(10, 6))
+              this.dicegameObj.getBalanceOf(res.address.replace('/^41/','0x')).call().then(ssRes => {
+                this.$store.commit('SET_DICE', ssRes.toString() / Math.pow(10, 6))
               })
             })
             this.close()

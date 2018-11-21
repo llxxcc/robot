@@ -28,7 +28,7 @@
     "warn": "Some betting records might lag. But it won't affect real betting result or mining rewards."
   },
   "config": {
-    "diceBlance": "Current BET Amount",
+    "diceBlance": "Current dice Amount",
     "mining": "Mining Strategy",
     "speed": "Mining Speed(Please enter 1-20 integers)",
     "speedUnit": "Mining Times Per Minute",
