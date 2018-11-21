@@ -203,7 +203,7 @@ export default {
         bandwidthTime: ''
       },
       myData: {
-        gameAddress: 'TBvs6Wvfi8M4QB34omgKZ4n8JmgH6ePvmK',
+        gameAddress: 'TP82MkFYwLXzM5WowhJ4FfMHSP8RPzrhSC',
         inviterAddress: '',
         rollTimes: 0,
         dice: '',
@@ -265,8 +265,8 @@ export default {
         }).then(async res => {
           this.getBalance()
           this.myData.rollTimes++
-          let dice = await this.dicegameObj.getBalanceOf(this.account.address).call()
-          this.myData.dice = dice.toString() / Math.pow(10, 6)
+          let dice = await this.dicegameObj.balanceOf(this.account.address).call()
+          this.myData.dice = dice.balance.toString() / Math.pow(10, 6)
           console.log(dice)
         }).catch(err => {
           console.log(err)
@@ -460,12 +460,12 @@ export default {
     dataAuth() {
       let data = this.myData
       let res = true
-      if (data.speed < 1 || data.speed > 20) {
-        res = false
-        this.auth.speed = true
-      } else {
-        this.auth.speed = false
-      }
+      // if (data.speed < 1 || data.speed > 20) {
+      //   res = false
+      //   this.auth.speed = true
+      // } else {
+      //   this.auth.speed = false
+      // }
       if (data.betSection < 2 || data.betSection > 96) {
         res = false
         this.auth.betSection = true

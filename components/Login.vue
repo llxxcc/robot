@@ -5,7 +5,7 @@
     width="30%"
     @close="close"
     center>
-    <el-input v-model="privateKey" :placeholder="$t('login.placeholder')"></el-input>
+    <el-input type="password" v-model="privateKey" :placeholder="$t('login.placeholder')"></el-input>
     <span slot="footer" class="dialog-footer">
       <el-button @click="close">{{$t('login.cancel')}}</el-button>
       <el-button @click="login" type="primary">{{$t('login.login')}}</el-button>
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-const netServer = 'https://api.shasta.trongrid.io'
+const netServer = 'https://api.trongrid.io'
 const TronWeb = require('TronWeb')
 const HttpProvider = TronWeb.providers.HttpProvider
 const fullNode = new HttpProvider(netServer)
 const solidityNode = new HttpProvider(netServer)
 const eventServer = netServer
-const dicegame = 'THZP41aUockHon7n8vmSjcr55z1q9Ye7Gx'
+const dicegame = 'TQLNpTDwUQfnvTojatqRSqPpmW9WwWvkem'
 
 export default {
   props: {
@@ -59,8 +59,8 @@ export default {
               this.dicegameObj = sRes
               this.$store.commit('SET_DICEGAME', this.dicegameObj)
               // 获取dice
-              this.dicegameObj.getBalanceOf(res.address.replace('/^41/','0x')).call().then(ssRes => {
-                this.$store.commit('SET_DICE', ssRes.toString() / Math.pow(10, 6))
+              this.dicegameObj.balanceOf(res.address.replace('/^41/','0x')).call().then(ssRes => {
+                this.$store.commit('SET_DICE', ssRes.balance.toString() / Math.pow(10, 6))
               })
             })
             this.close()
