@@ -189,6 +189,7 @@ export default {
       winTimes: 0,
       loseTimes: 0,
       allTimes: 1,
+      multiple: 1,
       explainDialog: false,
       auth: {
         speed: false,
