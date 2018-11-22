@@ -204,7 +204,7 @@ export default {
         bandwidthTime: ''
       },
       myData: {
-        gameAddress: 'TP82MkFYwLXzM5WowhJ4FfMHSP8RPzrhSC',
+        gameAddress: 'TKHdYEou725e1njDNZpSrRYMb8DQGH26w1',
         inviterAddress: '',
         rollTimes: 0,
         dice: '',
@@ -241,7 +241,7 @@ export default {
         if (!flag && this.contractObj && this.dataAuth()) {
           this.status = 'stop'
           this.timer = setInterval(() => {this.roll()}, 60000/(this.myData.speed * 1))
-          this.eventTimer = setInterval(() => {this.eventServer()}, 6000)
+          // this.eventTimer = setInterval(() => {this.eventServer()}, 6000)
         } else {
           this.$message({
             type: 'error',
@@ -250,32 +250,40 @@ export default {
           })
           this.status = 'run'
           clearInterval(this.timer)
-          clearInterval(this.eventTimer)
+          // clearInterval(this.eventTimer)
         }
       } else {
         this.status = 'run'
         clearInterval(this.timer)
-        clearInterval(this.eventTimer)
+        // clearInterval(this.eventTimer)
       }
     },
     async roll() {
       let flag = this.my.trx * 1 < this.myData.stopTrx * 1 || this.my.bandwidth * 1 < this.myData.stopBandwidth * 1
-      if (!flag) {
-        this.contractObj.bet(this.myData.betSection * 1).send({
+      let ss = true
+      if (!flag && ss) {
+        ss = false
+        let id = await this.contractObj.bet(this.myData.betSection * 1).send({
           callValue: this.tronweb.toSun(this.myData.betNum * 1)
         }).then(async res => {
           this.getBalance()
           this.myData.rollTimes++
           let dice = await this.dicegameObj.balanceOf(this.account.address).call()
           this.myData.dice = dice.balance.toString() / Math.pow(10, 6)
-          console.log(dice)
-        }).catch(err => {
-          console.log(err)
         })
+        let eventTimers1 = setInterval(async () => {
+          const res = await this.tronweb.getEventByTransactionID(id);
+          console.log(res)
+          res.every(v => {
+            if (v.name === "bet") {
+              clearInterval(eventTimers1)
+            }
+          });
+        }, 1000)
       } else {
         this.status = 'run'
         clearInterval(this.timer)
-        clearInterval(this.eventTimer)
+        // clearInterval(this.eventTimer)
       }
     },
     // 查询事件服务器

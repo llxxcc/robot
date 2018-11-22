@@ -14,13 +14,13 @@
 </template>
 
 <script>
-const netServer = 'https://api.trongrid.io'
+const netServer = 'https://api.shasta.trongrid.io'
 const TronWeb = require('TronWeb')
 const HttpProvider = TronWeb.providers.HttpProvider
 const fullNode = new HttpProvider(netServer)
 const solidityNode = new HttpProvider(netServer)
 const eventServer = netServer
-const dicegame = 'TQLNpTDwUQfnvTojatqRSqPpmW9WwWvkem'
+const dicegame = 'TX4Xu12uWrt2MDv6oaomVdT9KjqkJcoxWH'
 
 export default {
   props: {
@@ -51,6 +51,7 @@ export default {
           privateKey
         )
         this.$store.commit('SET_TRONWEB', this.tronweb)
+        console.log(this.tronweb, '=====')
         this.tronweb.trx.getAccount().then(res => {
           if (res.address) {
             res.addressView = this.tronweb.address.fromHex(res.address)
