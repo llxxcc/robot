@@ -236,7 +236,7 @@ export default {
     run() {
       let flag = this.my.trx * 1 < this.myData.stopTrx * 1 || this.my.bandwidth * 1 < this.myData.stopBandwidth * 1
       if (this.status === 'run') {
-        this.startTime = new Date().getTime()
+        this.startTime = new Date().getTime() - 10 * 60 * 1000
         if (!flag && this.contractObj && this.dataAuth()) {
           this.status = 'stop'
           this.timer = setInterval(() => {this.roll()}, 60000/(this.myData.speed * 1))
