@@ -14,7 +14,7 @@
 </template>
 
 <script>
-const netServer = 'https://api.shasta.trongrid.io'
+const netServer = 'https://api.trongrid.io'
 const TronWeb = require('TronWeb')
 const HttpProvider = TronWeb.providers.HttpProvider
 const fullNode = new HttpProvider(netServer)
