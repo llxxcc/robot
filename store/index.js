@@ -6,7 +6,7 @@ export const state = () => ({
   tronweb: '',
   contractObj: '',
   dicegameObj: '',
-  dice: ''
+  dice: 0
 })
 
 export const mutations = {

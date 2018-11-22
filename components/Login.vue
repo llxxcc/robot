@@ -21,6 +21,7 @@ const fullNode = new HttpProvider(netServer)
 const solidityNode = new HttpProvider(netServer)
 const eventServer = netServer
 const dicegame = 'TMYcx6eoRXnePKT1jVn25ZNeMNJ6828HWk'
+import axios from 'axios'
 
 export default {
   props: {
@@ -55,14 +56,15 @@ export default {
           if (res.address) {
             res.addressView = this.tronweb.address.fromHex(res.address)
             this.$store.commit('SET_ACCOUNT', res)
-            this.tronweb.contract().at(dicegame).then(sRes => {
-              this.dicegameObj = sRes
-              this.$store.commit('SET_DICEGAME', this.dicegameObj)
+            this.getDiceNum(res)
+            // this.tronweb.contract().at(dicegame).then(sRes => {
+              // this.dicegameObj = sRes
+              // this.$store.commit('SET_DICEGAME', this.dicegameObj)
               // 获取dice
-              this.dicegameObj.getBalanceOf(res.address.replace('/^41/','0x')).call().then(ssRes => {
-                this.$store.commit('SET_DICE', ssRes.toString() / Math.pow(10, 6))
-              })
-            })
+              // this.dicegameObj.getBalanceOf(res.address.replace('/^41/','0x')).call().then(ssRes => {
+                // this.$store.commit('SET_DICE', ssRes.toString() / Math.pow(10, 6))
+              // })
+            // })
             this.close()
             this.$message({
               showClose: true,
@@ -84,7 +86,24 @@ export default {
           type: 'error'
         });
       }
-    }
+    },
+    // 获取dice数量
+    getDiceNum(account) {
+      axios({
+        url: 'http://wlcyapi.tronscan.org/api/mine/TMYcx6eoRXnePKT1jVn25ZNeMNJ6828HWk/status/' + account.addressView,
+        method: 'get'
+      }).then(res => {
+        let data = res.data || {}
+        this.$store.commit('SET_DICE', data.TotalMine)
+      })
+    },
+    tableRowClassName({row, rowIndex}) {
+      if (row.name === 'UserWin') {
+        return 'win-row';
+      } else {
+        return 'lose-row';
+      }
+    },
   }
 }
 </script>

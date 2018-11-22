@@ -179,6 +179,7 @@ export default {
       contractObj: '',
       timer: '',
       eventTimer: '',
+      diceTimer: '',
       freezeEnergy: '',
       freezeBandwidth: '',
       startTime: '',
@@ -207,7 +208,7 @@ export default {
         gameAddress: 'TMYcx6eoRXnePKT1jVn25ZNeMNJ6828HWk',
         inviterAddress: '',
         rollTimes: 0,
-        dice: '',
+        dice: 0,
         speed: 20,
         betSection: 50,
         betNum: 10,
@@ -221,6 +222,7 @@ export default {
     console.log(window)
     if (this.account.addressView) {
       this.getBalance()
+      this.getDiceNum()
     }
     let listStr = localStorage.getItem('LIST')
     if (listStr) {
@@ -237,11 +239,12 @@ export default {
     run() {
       let flag = this.my.trx * 1 < this.myData.stopTrx * 1 || this.my.bandwidth * 1 < this.myData.stopBandwidth * 1
       if (this.status === 'run') {
-        this.startTime = new Date().getTime()
+        this.startTime = new Date().getTime() - 5 * 60 * 1000
         if (!flag && this.contractObj && this.dataAuth()) {
           this.status = 'stop'
           this.timer = setInterval(() => {this.roll()}, 60000/(this.myData.speed * 1))
           this.eventTimer = setInterval(() => {this.eventServer()}, 6000)
+          this.diceTimer = setInterval(() => {this.getDiceNum()}, 60000)
         } else {
           this.$message({
             type: 'error',
@@ -251,11 +254,13 @@ export default {
           this.status = 'run'
           clearInterval(this.timer)
           clearInterval(this.eventTimer)
+           clearInterval(this.diceTimer)
         }
       } else {
         this.status = 'run'
         clearInterval(this.timer)
         clearInterval(this.eventTimer)
+        clearInterval(this.diceTimer)
       }
     },
     async roll() {
@@ -266,9 +271,9 @@ export default {
         }).then(async res => {
           this.getBalance()
           this.myData.rollTimes++
-          let dice = await this.dicegameObj.getBalanceOf(this.account.address).call()
-          this.myData.dice = dice.toString() / Math.pow(10, 6)
-          console.log(dice)
+          // let dice = await this.dicegameObj.getBalanceOf(this.account.address).call()
+          // this.myData.dice = dice.toString() / Math.pow(10, 6)
+          // console.log(dice)
         }).catch(err => {
           console.log(err)
         })
@@ -276,6 +281,7 @@ export default {
         this.status = 'run'
         clearInterval(this.timer)
         clearInterval(this.eventTimer)
+        clearInterval(this.diceTimer)
       }
     },
     // 查询事件服务器
@@ -435,6 +441,17 @@ export default {
             message: this.$t('address.suceess')
           })
         }
+      })
+    },
+    // 获取dice数量
+    getDiceNum() {
+      axios({
+        url: 'http://wlcyapi.tronscan.org/api/mine/'+ this.myData.gameAddress +'/status/' + this.account.addressView,
+        method: 'get'
+      }).then(res => {
+        let data = res.data || {}
+        console.log(data)
+        this.myData.dice = data.TotalMine || '0'
       })
     },
     tableRowClassName({row, rowIndex}) {
