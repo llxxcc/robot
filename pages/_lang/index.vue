@@ -478,12 +478,12 @@ export default {
     dataAuth() {
       let data = this.myData
       let res = true
-      // if (data.speed < 1 || data.speed > 20) {
-      //   res = false
-      //   this.auth.speed = true
-      // } else {
-      //   this.auth.speed = false
-      // }
+      if (data.speed < 1 || data.speed > 20) {
+        res = false
+        this.auth.speed = true
+      } else {
+        this.auth.speed = false
+      }
       if (data.betSection < 2 || data.betSection > 96) {
         res = false
         this.auth.betSection = true
