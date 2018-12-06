@@ -8,7 +8,7 @@
       <div class="address">
         <!-- 修改游戏合约地址 -->
         <p>
-          {{$t('address.gameContract')}}：
+          {{$t('address.gameContract')}}{{$t('address.tips')}}：
           <a @click="getContractObj" href="javascript:;">{{$t('address.bind')}}</a>
         </p>
         <el-input v-model="myData.gameAddress" :placeholder="$t('address.input1')"></el-input>
@@ -21,13 +21,13 @@
         <!-- 投注次数 -->
         <p>{{$t('address.times')}}：{{myData.rollTimes}}</p>
         <!-- 投注胜率 -->
-        <p>
+        <!-- <p>
           {{$t('address.winRate')}}：
           {{winTimes + loseTimes === 0 
             ? Number(0).toFixed(1) 
             : ((winTimes / (winTimes + loseTimes)) * 100).toFixed(1)}}%
         </p>
-        <span style="font-size: 12px; color: #666;">* {{$t('address.warn')}}</span>
+        <span style="font-size: 12px; color: #666;">* {{$t('address.warn')}}</span> -->
       </div>
       <!-- 修改策略 -->
       <div class="config">
@@ -211,7 +211,7 @@ export default {
         dice: 0,
         speed: 20,
         betSection: 50,
-        betNum: 10,
+        betNum: 100,
         stopTrx: 1000,
         stopEnergy: 1000,
         stopBandwidth: 1000

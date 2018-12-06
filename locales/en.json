@@ -13,6 +13,7 @@
     "authLogin": "Please login at first"
   },
   "address": {
+    "tips": "(Default: Trondice contract address)",
     "gameContract": "Smart Contract Address",
     "edit": "Edit",
     "bind": "Submit",

@@ -13,6 +13,7 @@
     "authLogin": "请先登录"
   },
   "address": {
+    "tips": "（默认：trondice游戏合约地址）",
     "gameContract": "游戏合约地址",
     "edit": "修改",
     "bind": "提交绑定",
