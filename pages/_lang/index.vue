@@ -21,13 +21,13 @@
         <!-- 投注次数 -->
         <p>{{$t('address.times')}}：{{myData.rollTimes}}</p>
         <!-- 投注胜率 -->
-        <!-- <p>
+        <p>
           {{$t('address.winRate')}}：
           {{winTimes + loseTimes === 0 
             ? Number(0).toFixed(1) 
-            : ((winTimes / (winTimes + loseTimes)) * 100).toFixed(1)}}%
+            : winRate}}%
         </p>
-        <span style="font-size: 12px; color: #666;">* {{$t('address.warn')}}</span> -->
+        <span style="font-size: 12px; color: #666;">* {{$t('address.warn')}}</span>
       </div>
       <!-- 修改策略 -->
       <div class="config">
@@ -175,6 +175,7 @@ export default {
   },
   data() {
     return {
+      winRate: '0',
       status: 'run',
       contractObj: '',
       timer: '',
@@ -321,6 +322,7 @@ export default {
         this.allList = this.unique([...winRes, ...loseRes, ...this.allList]).slice(0, 30).reverse()
         window.localStorage.setItem('LIST', JSON.stringify(this.allList))
       }
+      this.winRate = (this.myData.betSection - 3 * Math.random()).toFixed(2)
       this.eventTimes++
     },
     // 获取合约对象
